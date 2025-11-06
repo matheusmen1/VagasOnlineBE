@@ -30,7 +30,7 @@ public class vagasonlineRestController
             return ResponseEntity.badRequest().body(new Erro("Nenhuma Vaga Encontrada"));
     }
     @GetMapping(value = "vagas/get-one/{registro}")
-    public ResponseEntity<Object> getVagasById(@PathVariable String registro)
+    public ResponseEntity<Object> getVagaByRegistro(@PathVariable String registro)
     {
         Vaga vaga = vagasService.getOne(registro);
         if (vaga != null)
@@ -38,6 +38,8 @@ public class vagasonlineRestController
         else
             return ResponseEntity.badRequest().body(new Erro("Registro de Vaga Não Encontrado"));
     }
+
+    //get para o cargo
     @GetMapping(value = "cargo/get-all")
     public ResponseEntity<Object> getAllCargo()
     {
@@ -48,5 +50,32 @@ public class vagasonlineRestController
             return ResponseEntity.badRequest().body((new Erro("Nenhum Cargo Encontrado")));
     }
 
+    //post para vaga
+    @PostMapping("vagas")
+    public ResponseEntity<Object> criarVaga(@RequestBody Vaga vaga)
+    {
+        //verifica a existência da vaga
+        Vaga novaVaga = vagasService.getOne(vaga.getRegistro());
+        if (novaVaga == null) //ainda não existe a respectiva vaga
+        {
+            novaVaga = vagasService.criar(vaga);
+            if (novaVaga != null)
+                return ResponseEntity.ok(novaVaga);
+        }
 
+        //enviar o erro específico
+        return ResponseEntity.badRequest().body(new Erro("Erro ao criar uma nova Vaga!!"));
+    }
+
+    //put para vaga
+    @PutMapping("vagas")
+    public ResponseEntity<Object> alterarVaga(@RequestBody Vaga vaga)
+    {
+        //verifica a existência da vaga
+        Vaga vagaAtt = vagasService.atualizar(vaga);
+        if(vagaAtt != null)
+            return ResponseEntity.ok(vagaAtt);
+        //enviar o erro específico
+        return ResponseEntity.badRequest().body(new Erro("Erro ao editar a Vaga!!"));
+    }
 }

@@ -20,7 +20,7 @@ public class CargoService
         List<Cargo> cargos = new ArrayList<>();
         try
         {
-            MongoCollection<Document> collection = Conexao.getCollection("cargos");
+            MongoCollection<Document> collection = Conexao.getCollection("vagas_online","cargos");
             MongoCursor<Document> cursor = collection.find().iterator();
             while (cursor.hasNext())
             {
