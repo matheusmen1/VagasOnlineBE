@@ -13,7 +13,7 @@ public class InteresseService
     public Interesse save(Interesse interesse)
     {
         try{
-            MongoCollection<Document> collection = Conexao.getCollection("interesses");
+            MongoCollection<Document> collection = Conexao.getCollection("vagas_online","interesses");
             collection.insertOne(Document.parse(new Gson().toJson(interesse)));
             return interesse;
         }catch(Exception e){
