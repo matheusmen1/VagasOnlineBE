@@ -75,4 +75,29 @@ public class VagasService {
         return null;
     }
 
+    public Vaga apagar(String registro) {
+        try{
+            //recupera a collection do banco mandando o nome e a collection necessária
+            MongoCollection<Document> collection = Conexao.getCollection("vagas_online", "vagas");
+            Bson filtro = eq("registro", registro);
+            Document vagaRecuperada = collection.find(filtro).first();
+
+            if(vagaRecuperada != null){
+                //aqui então eu vou excluir a vaga especificada
+                //Vaga vagaExcluida = new Vaga();
+                //pegar o id da vaga que quero excluir
+                ObjectId id = vagaRecuperada.getObjectId("_id");
+                collection.deleteOne(eq("_id", id));
+
+                return new Gson().fromJson(vagaRecuperada.toJson(), Vaga.class); //já retorna um objeto do tipo Vaga
+                //vagaRecuperada.get("");
+                //return vagaExcluida;
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null; //caso não tenha o registro para excluir
+    }
+
 }

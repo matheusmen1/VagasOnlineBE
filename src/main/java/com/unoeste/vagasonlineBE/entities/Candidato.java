@@ -1,7 +1,6 @@
 package com.unoeste.vagasonlineBE.entities;
 
-public class Candidato
-{
+public class Candidato {
     private String nome;
     private String cpf;
     private String email;
@@ -17,7 +16,7 @@ public class Candidato
     }
 
     public Candidato() {
-        this("","","","","");
+        this("", "", "", "", "");
     }
 
     public String getNome() {

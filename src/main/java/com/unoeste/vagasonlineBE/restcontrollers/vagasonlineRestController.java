@@ -9,6 +9,7 @@ import com.unoeste.vagasonlineBE.entities.Vaga;
 import com.unoeste.vagasonlineBE.services.VagasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.reactive.ClientHttpResponseDecorator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -73,6 +74,7 @@ public class vagasonlineRestController
         Vaga novaVaga = vagasService.getOne(vaga.getRegistro());
         if (novaVaga == null) //ainda não existe a respectiva vaga
         {
+            //se não existe a vaga eu posso adicionar a nova
             novaVaga = vagasService.criar(vaga);
             if (novaVaga != null)
                 return ResponseEntity.ok(novaVaga);
@@ -86,12 +88,23 @@ public class vagasonlineRestController
     @PutMapping("vagas")
     public ResponseEntity<Object> alterarVaga(@RequestBody Vaga vaga)
     {
-        //verifica a existência da vaga
         Vaga vagaAtt = vagasService.atualizar(vaga);
         if(vagaAtt != null)
             return ResponseEntity.ok(vagaAtt);
         //enviar o erro específico
         return ResponseEntity.badRequest().body(new Erro("Erro ao editar a Vaga!!"));
+    }
+
+    //delete para a vaga
+    @DeleteMapping("vagas")
+    public ResponseEntity<Object> deletarVaga(@PathVariable String registro)
+    {
+        Vaga vagaExcluida = vagasService.apagar(registro);
+        if(vagaExcluida != null) //excluiu do banco o registro da vaga
+        {
+            return ResponseEntity.ok(vagaExcluida);
+        }
+        return ResponseEntity.badRequest().body(new Erro("Erro ao deletar a Vaga!!"));
     }
 
 }

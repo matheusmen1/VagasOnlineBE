@@ -1,7 +1,6 @@
 package com.unoeste.vagasonlineBE.entities;
 
-public class Empresa
-{
+public class Empresa {
     private String nome_fantasia;
     private String razao_social;
     private String tipo;
@@ -11,9 +10,11 @@ public class Empresa
         this.razao_social = razao_social;
         this.tipo = tipo;
     }
+
     public Empresa() {
-        this("","","");
+        this("", "", "");
     }
+
     public String getNome_fantasia() {
         return nome_fantasia;
     }

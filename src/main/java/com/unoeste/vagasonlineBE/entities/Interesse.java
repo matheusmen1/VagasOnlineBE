@@ -1,7 +1,6 @@
 package com.unoeste.vagasonlineBE.entities;
 
-public class Interesse
-{
+public class Interesse {
     private Vaga vaga;
     private Candidato candidato;
 
@@ -10,8 +9,7 @@ public class Interesse
         this.candidato = candidato;
     }
 
-    public Interesse()
-    {
+    public Interesse() {
         this(null, null);
     }
 

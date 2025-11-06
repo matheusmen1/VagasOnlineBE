@@ -1,7 +1,6 @@
 package com.unoeste.vagasonlineBE.entities;
 
-public class Vaga
-{
+public class Vaga {
     private String registro;
     private Empresa empresa;
     private String cargo;
@@ -28,9 +27,8 @@ public class Vaga
         this.remuneracao = remuneracao;
     }
 
-    public Vaga()
-    {
-        this("",null,"","","","","","","","","");
+    public Vaga() {
+        this("", null, "", "", "", "", "", "", "", "", "");
     }
 
     public String getRegistro() {

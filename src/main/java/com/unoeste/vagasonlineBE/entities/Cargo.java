@@ -1,26 +1,21 @@
 package com.unoeste.vagasonlineBE.entities;
 
-public class Cargo
-{
+public class Cargo {
     private String nome;
 
-    public Cargo(String nome)
-    {
+    public Cargo(String nome) {
         this.nome = nome;
     }
 
-    public Cargo()
-    {
+    public Cargo() {
         this("");
     }
 
-    public String getNome()
-    {
+    public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome)
-    {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
