@@ -1,7 +1,9 @@
 package com.unoeste.vagasonlineBE.restcontrollers;
 
 import com.unoeste.vagasonlineBE.entities.Cargo;
+import com.unoeste.vagasonlineBE.entities.Interesse;
 import com.unoeste.vagasonlineBE.services.CargoService;
+import com.unoeste.vagasonlineBE.services.InteresseService;
 import com.unoeste.vagasonlineBE.util.Erro;
 import com.unoeste.vagasonlineBE.entities.Vaga;
 import com.unoeste.vagasonlineBE.services.VagasService;
@@ -19,6 +21,8 @@ public class vagasonlineRestController
     private VagasService vagasService;
     @Autowired
     private CargoService cargoService;
+    @Autowired
+    private InteresseService interesseService;
 
     @GetMapping(value = "vagas/get-all")
     public ResponseEntity<Object> getAllVagas()
@@ -47,6 +51,18 @@ public class vagasonlineRestController
         else
             return ResponseEntity.badRequest().body((new Erro("Nenhum Cargo Encontrado")));
     }
-
+    @PostMapping(value = "interesse")
+    public ResponseEntity<Object> addInteresse(@RequestBody Interesse interesse)
+    {
+        Interesse novoInteresse = interesseService.save(interesse);
+        if (novoInteresse != null)
+        {
+            return ResponseEntity.ok(novoInteresse);
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(new Erro("Erro ao Gravar Interesse"));
+        }
+    }
 
 }
