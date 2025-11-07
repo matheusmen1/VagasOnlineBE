@@ -1,25 +1,29 @@
 package com.unoeste.vagasonlineBE.restcontrollers;
 
 import com.unoeste.vagasonlineBE.entities.Cargo;
-import com.unoeste.vagasonlineBE.entities.Interesses;
+import com.unoeste.vagasonlineBE.entities.Empresa;
+import com.unoeste.vagasonlineBE.entities.Interesse;
 import com.unoeste.vagasonlineBE.services.CargoService;
+import com.unoeste.vagasonlineBE.services.EmpresaService;
 import com.unoeste.vagasonlineBE.services.InteresseService;
 import com.unoeste.vagasonlineBE.util.Erro;
 import com.unoeste.vagasonlineBE.entities.Vaga;
 import com.unoeste.vagasonlineBE.services.VagasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.reactive.ClientHttpResponseDecorator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "apis")
-@CrossOrigin
 public class vagasonlineRestController
 {
     @Autowired
     private VagasService vagasService;
+    @Autowired
+    private EmpresaService empresaService;
     @Autowired
     private CargoService cargoService;
     @Autowired
@@ -30,7 +34,7 @@ public class vagasonlineRestController
     {
         List<Vaga> vagaList = vagasService.getAll();
         if (!vagaList.isEmpty())
-            return ResponseEntity.ok(vagasService.getAll());
+            return ResponseEntity.ok(vagaList);
         else
             return ResponseEntity.badRequest().body(new Erro("Nenhuma Vaga Encontrada"));
     }
@@ -43,6 +47,16 @@ public class vagasonlineRestController
         else
             return ResponseEntity.badRequest().body(new Erro("Registro de Vaga Não Encontrado"));
     }
+    @GetMapping(value = "empresa/get-all")
+    public ResponseEntity<Object> getAllEmpresa()
+    {
+        List<Empresa> empresaList = empresaService.getAll();
+        if(!empresaList.isEmpty())
+            return ResponseEntity.ok(empresaList);
+        else
+            return ResponseEntity.badRequest().body(new Erro("Nenhuma Empresa Encontrada"));
+    }
+
     @GetMapping(value = "cargo/get-all")
     public ResponseEntity<Object> getAllCargo()
     {
@@ -53,9 +67,9 @@ public class vagasonlineRestController
             return ResponseEntity.badRequest().body((new Erro("Nenhum Cargo Encontrado")));
     }
     @PostMapping(value = "interesse")
-    public ResponseEntity<Object> addInteresse(@RequestBody Interesses interesses)
+    public ResponseEntity<Object> addInteresse(@RequestBody Interesse interesse)
     {
-        Interesses novoInteresse = interesseService.save(interesses);
+        Interesse novoInteresse = interesseService.save(interesse);
         if (novoInteresse != null)
         {
             return ResponseEntity.ok(novoInteresse);
