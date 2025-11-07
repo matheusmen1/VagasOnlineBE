@@ -96,7 +96,7 @@ public class vagasonlineRestController
     }
 
     //delete para a vaga
-    @DeleteMapping("vagas")
+    @DeleteMapping("vagas/{registro}")
     public ResponseEntity<Object> deletarVaga(@PathVariable String registro)
     {
         Vaga vagaExcluida = vagasService.apagar(registro);
