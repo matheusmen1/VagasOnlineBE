@@ -1,8 +1,10 @@
 package com.unoeste.vagasonlineBE.restcontrollers;
 
 import com.unoeste.vagasonlineBE.entities.Cargo;
+import com.unoeste.vagasonlineBE.entities.Empresa;
 import com.unoeste.vagasonlineBE.entities.Interesse;
 import com.unoeste.vagasonlineBE.services.CargoService;
+import com.unoeste.vagasonlineBE.services.EmpresaService;
 import com.unoeste.vagasonlineBE.services.InteresseService;
 import com.unoeste.vagasonlineBE.util.Erro;
 import com.unoeste.vagasonlineBE.entities.Vaga;
@@ -21,6 +23,8 @@ public class vagasonlineRestController
     @Autowired
     private VagasService vagasService;
     @Autowired
+    private EmpresaService empresaService;
+    @Autowired
     private CargoService cargoService;
     @Autowired
     private InteresseService interesseService;
@@ -30,7 +34,7 @@ public class vagasonlineRestController
     {
         List<Vaga> vagaList = vagasService.getAll();
         if (!vagaList.isEmpty())
-            return ResponseEntity.ok(vagasService.getAll());
+            return ResponseEntity.ok(vagaList);
         else
             return ResponseEntity.badRequest().body(new Erro("Nenhuma Vaga Encontrada"));
     }
@@ -43,6 +47,16 @@ public class vagasonlineRestController
         else
             return ResponseEntity.badRequest().body(new Erro("Registro de Vaga Não Encontrado"));
     }
+    @GetMapping(value = "empresa/get-all")
+    public ResponseEntity<Object> getAllEmpresa()
+    {
+        List<Empresa> empresaList = empresaService.getAll();
+        if(!empresaList.isEmpty())
+            return ResponseEntity.ok(empresaList);
+        else
+            return ResponseEntity.badRequest().body(new Erro("Nenhuma Empresa Encontrada"));
+    }
+
     @GetMapping(value = "cargo/get-all")
     public ResponseEntity<Object> getAllCargo()
     {
