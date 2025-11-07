@@ -21,14 +21,19 @@ public class Conexao
 
     //retorno a colletion de uma database específica
     public static MongoCollection<Document> getCollection(String dbName, String collectionName) {
-        String connectionString = "mongodb://localhost:27017";
-        mongoClient = MongoClients.create(connectionString);
+        if (mongoClient == null)
+        {
+            String connectionString = "mongodb://localhost:27017";
+            mongoClient = MongoClients.create(connectionString);
+        }
+
         database = mongoClient.getDatabase(dbName);
         return database.getCollection(collectionName);
     }
 
     //retorno a database passa por parâmetro
     public static MongoDatabase getDB(String dbName) {
+
         String connectionString = "mongodb://localhost:27017";
         mongoClient = MongoClients.create(connectionString);
         database = mongoClient.getDatabase(dbName);

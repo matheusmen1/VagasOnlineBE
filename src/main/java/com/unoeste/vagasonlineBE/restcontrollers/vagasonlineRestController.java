@@ -1,7 +1,7 @@
 package com.unoeste.vagasonlineBE.restcontrollers;
 
 import com.unoeste.vagasonlineBE.entities.Cargo;
-import com.unoeste.vagasonlineBE.entities.Interesse;
+import com.unoeste.vagasonlineBE.entities.Interesses;
 import com.unoeste.vagasonlineBE.services.CargoService;
 import com.unoeste.vagasonlineBE.services.InteresseService;
 import com.unoeste.vagasonlineBE.util.Erro;
@@ -9,13 +9,13 @@ import com.unoeste.vagasonlineBE.entities.Vaga;
 import com.unoeste.vagasonlineBE.services.VagasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.reactive.ClientHttpResponseDecorator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "apis")
+@CrossOrigin
 public class vagasonlineRestController
 {
     @Autowired
@@ -53,9 +53,9 @@ public class vagasonlineRestController
             return ResponseEntity.badRequest().body((new Erro("Nenhum Cargo Encontrado")));
     }
     @PostMapping(value = "interesse")
-    public ResponseEntity<Object> addInteresse(@RequestBody Interesse interesse)
+    public ResponseEntity<Object> addInteresse(@RequestBody Interesses interesses)
     {
-        Interesse novoInteresse = interesseService.save(interesse);
+        Interesses novoInteresse = interesseService.save(interesses);
         if (novoInteresse != null)
         {
             return ResponseEntity.ok(novoInteresse);

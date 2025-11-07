@@ -1,15 +1,15 @@
 package com.unoeste.vagasonlineBE.entities;
 
-public class Interesse {
+public class Interesses {
     private Vaga vaga;
     private Candidato candidato;
 
-    public Interesse(Vaga vaga, Candidato candidato) {
+    public Interesses(Vaga vaga, Candidato candidato) {
         this.vaga = vaga;
         this.candidato = candidato;
     }
 
-    public Interesse() {
+    public Interesses() {
         this(null, null);
     }
 
@@ -28,4 +28,5 @@ public class Interesse {
     public void setCandidato(Candidato candidato) {
         this.candidato = candidato;
     }
+
 }
