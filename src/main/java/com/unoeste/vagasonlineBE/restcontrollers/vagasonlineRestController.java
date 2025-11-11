@@ -96,7 +96,7 @@ public class vagasonlineRestController
         }
 
         //enviar o erro específico
-        return ResponseEntity.badRequest().body(new Erro("Erro ao criar uma nova Vaga!!"));
+        return ResponseEntity.badRequest().body(new Erro("Erro: Vaga já existe !!"));
     }
 
     //put para vaga
@@ -114,6 +114,13 @@ public class vagasonlineRestController
     @DeleteMapping("vagas/{registro}")
     public ResponseEntity<Object> deletarVaga(@PathVariable String registro)
     {
+        //se tiver um registro cadastrado na vaga não poderá ser excluida
+        Interesses interesse = interesseService.getOne(registro);
+        if(interesse != null)
+        {
+            return ResponseEntity.badRequest().body(new Erro("Erro: vaga possui interesse(s)"));
+        }
+
         Vaga vagaExcluida = vagasService.apagar(registro);
         if(vagaExcluida != null) //excluiu do banco o registro da vaga
         {
