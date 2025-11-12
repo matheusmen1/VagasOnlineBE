@@ -103,6 +103,12 @@ public class vagasonlineRestController
     @PutMapping("vagas")
     public ResponseEntity<Object> alterarVaga(@RequestBody Vaga vaga)
     {
+        Interesses interesse = interesseService.getOne(vaga.getRegistro());
+        if(interesse != null)
+        {
+            return ResponseEntity.badRequest().body(new Erro("Erro: vaga possui interesse(s), não pode ser alterada!"));
+        }
+
         Vaga vagaAtt = vagasService.atualizar(vaga);
         if(vagaAtt != null)
             return ResponseEntity.ok(vagaAtt);
@@ -118,7 +124,7 @@ public class vagasonlineRestController
         Interesses interesse = interesseService.getOne(registro);
         if(interesse != null)
         {
-            return ResponseEntity.badRequest().body(new Erro("Erro: vaga possui interesse(s)"));
+            return ResponseEntity.badRequest().body(new Erro("Erro: vaga possui interesse(s), não pode ser excluida!"));
         }
 
         Vaga vagaExcluida = vagasService.apagar(registro);
